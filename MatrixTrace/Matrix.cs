@@ -10,42 +10,47 @@ namespace MatrixTrace
 {
     public class Matrix
     {
+        public int[,] matrix;
+        private int rows;
+        private int columns;
+
         public Matrix(int rows, int columns)
         {
-            int[,] matrix = new int[columns, rows];
+            this.rows = rows;
+            this.columns = columns;
+            matrix = new int[rows, columns];
+            Create();
+        }
+
+        public int[,] Create()
+        {
             Random randNumbers = new Random();
-            for (int i = 0; i < columns; i++)
+            for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < rows; j++)
+                for (int j = 0; j < columns; j++)
                 {
                     matrix[i, j] = randNumbers.Next(0, 101);
                 }
             }
-            PrintMatrix(matrix);
-            TraceCalculation(matrix);
-            PrintSpiral(matrix);
+            return matrix;
         }
 
-        private void TraceCalculation(int[,] matrix)
+        public int GetTrace()
         {
             int sum = 0;
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            for (int i = 0, j = 0; i < Math.Min(rows, columns); i++, j++)
             {
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    if (j == i)
-                    {
-                        sum += matrix[i, j];
-                    }
-                }
+                 if (j == i)
+                 {
+                    sum += matrix[i, j];
+                 }
             }
-            Console.ResetColor();
-            Console.WriteLine($"The sum of all elements of the main diagonal is: {sum}");
-            Console.WriteLine();
+            return sum;
         }
 
-        private void PrintMatrix(int[,] matrix)
+        public void Print()
         {
+            string value = string.Empty;
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
@@ -53,12 +58,14 @@ namespace MatrixTrace
                     if (j == i)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write(matrix[i, j] + "  ");
+                        value = matrix[i,j].ToString();
+                        Console.Write(value.PadLeft(4));
                     }
                     else
                     {
                         Console.ResetColor();
-                        Console.Write(matrix[i, j] + "  ");
+                        value = matrix[i,j].ToString();
+                        Console.Write(value.PadLeft(4));
                     }
                 }
                 Console.WriteLine(" ");
@@ -67,7 +74,7 @@ namespace MatrixTrace
         }
 
         //Spiral matrix output works only for three row matrix
-        private void PrintSpiral(int[,] matrix)
+        public void PrintSpiral()
         {
             Console.ResetColor();
             Console.WriteLine("Output from matrix in spiral order:");

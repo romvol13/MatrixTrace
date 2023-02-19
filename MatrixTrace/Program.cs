@@ -4,22 +4,39 @@
     {
         static void Main(string[] args)
         {
-            int columns;
             int rows;
+            int columns;
 
-            Console.Write("Enter the quantity of columns for matrix: ");
-            bool input1 = int.TryParse(Console.ReadLine(), out columns);
+            //Checking if a first input is an integer and greather than zero 
             Console.Write("Enter the quantity of rows for matrix: ");
-            bool input2 = int.TryParse(Console.ReadLine(), out rows);
-
-            if ((input1 & input2) & (columns > 0 & rows > 0))
-            {
-                Matrix matrix = new Matrix(columns, rows);
-            }
-            else
+            if (!int.TryParse(Console.ReadLine(), out rows))
             {
                 Console.WriteLine("Input is invalid!");
+                return;
             }
+            else if (rows < 1) 
+            {
+                Console.WriteLine("Input is invalid!");
+                return;
+            }
+
+            //Checking if a second input is an integer and greather than zero
+            Console.Write("Enter the quantity of columns for matrix: ");
+            if (!int.TryParse(Console.ReadLine(), out columns))
+            {
+                if ((columns < 1))
+                Console.WriteLine("Input is invalid!");
+                return;
+            }
+            else if (columns < 1)
+            {
+                Console.WriteLine("Input is invalid!");
+                return;
+            }
+
+            Matrix matrix = new Matrix(rows, columns);
+            matrix.Print();
+            Console.WriteLine(matrix.GetTrace());
         }
     }
 }
