@@ -1,4 +1,6 @@
-﻿namespace MatrixTrace
+﻿using System.Runtime.CompilerServices;
+
+namespace MatrixTrace
 {
     internal class Program
     {
@@ -6,37 +8,51 @@
         {
             int rows;
             int columns;
+            string input;
 
             //Checking if a first input is an integer and greather than zero 
             Console.Write("Enter the quantity of rows for matrix: ");
-            if (!int.TryParse(Console.ReadLine(), out rows))
+            input = Console.ReadLine();
+            if (CheckInput(input) == true)
             {
-                Console.WriteLine("Input is invalid!");
+                rows = Convert.ToInt32(input);
+            }
+            else
+            {
+                Console.WriteLine("Invalid input");
                 return;
             }
-            else if (rows < 1) 
-            {
-                Console.WriteLine("Input is invalid!");
-                return;
-            }
-
+            
             //Checking if a second input is an integer and greather than zero
-            Console.Write("Enter the quantity of columns for matrix: ");
-            if (!int.TryParse(Console.ReadLine(), out columns))
+            Console.WriteLine("Enter the quantity of columns for matrix: ");
+            input= Console.ReadLine();
+            if (CheckInput(input) == true)
             {
-                if ((columns < 1))
-                Console.WriteLine("Input is invalid!");
-                return;
+                columns = Convert.ToInt32(input);
             }
-            else if (columns < 1)
+            else
             {
-                Console.WriteLine("Input is invalid!");
+                Console.WriteLine("Invalid input");
                 return;
             }
 
             Matrix matrix = new Matrix(rows, columns);
             matrix.Print();
-            Console.WriteLine(matrix.GetTrace());
+            Console.WriteLine($"The sum of all elements on the main diagonal is: {matrix.GetTrace()}");
+        }
+
+        private static bool CheckInput(string input)
+        {
+            int number;
+            if (!int.TryParse(input, out number))
+            {
+                return false;
+            }
+            else if (number < 1)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

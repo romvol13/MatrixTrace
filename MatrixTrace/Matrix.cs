@@ -10,40 +10,30 @@ namespace MatrixTrace
 {
     public class Matrix
     {
-        public int[,] matrix;
-        private int rows;
-        private int columns;
+        private int[,] _matrix;
+        private int _rows;
+        private int _columns;
 
         public Matrix(int rows, int columns)
         {
-            this.rows = rows;
-            this.columns = columns;
-            matrix = new int[rows, columns];
-            Create();
-        }
-
-        public int[,] Create()
-        {
-            Random randNumbers = new Random();
-            for (int i = 0; i < rows; i++)
+            if (CheckValues(rows, columns) == false)
             {
-                for (int j = 0; j < columns; j++)
-                {
-                    matrix[i, j] = randNumbers.Next(0, 101);
-                }
+                Console.WriteLine("Invalid input");
+                return;
             }
-            return matrix;
+
+            _rows = rows;
+            _columns = columns;
+            _matrix = new int[_rows, _columns];
+            Create();
         }
 
         public int GetTrace()
         {
             int sum = 0;
-            for (int i = 0, j = 0; i < Math.Min(rows, columns); i++, j++)
+            for (int i = 0; i < Math.Min(_rows, _columns); i++)
             {
-                 if (j == i)
-                 {
-                    sum += matrix[i, j];
-                 }
+                sum += _matrix[i, i];
             }
             return sum;
         }
@@ -51,25 +41,51 @@ namespace MatrixTrace
         public void Print()
         {
             string value = string.Empty;
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            for (int i = 0; i < _matrix.GetLength(0); i++)
             {
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                for (int j = 0; j < _matrix.GetLength(1); j++)
                 {
                     if (j == i)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        value = matrix[i,j].ToString();
+                        value = _matrix[i,j].ToString();
                         Console.Write(value.PadLeft(4));
                     }
                     else
                     {
                         Console.ResetColor();
-                        value = matrix[i,j].ToString();
+                        value = _matrix[i,j].ToString();
                         Console.Write(value.PadLeft(4));
                     }
                 }
                 Console.WriteLine(" ");
                 Console.WriteLine(" ");
+            }
+        }
+
+        public int[,] ReturnMatrix()   //method for unit test
+        {
+            return _matrix;
+        }
+
+        public bool CheckValues(int rows, int columns)
+        {
+            if (rows < 1 | columns < 1)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private void Create()
+        {
+            Random randNumbers = new Random();
+            for (int i = 0; i < _rows; i++)
+            {
+                for (int j = 0; j < _columns; j++)
+                {
+                    _matrix[i, j] = randNumbers.Next(0, 101);
+                }
             }
         }
 
@@ -78,27 +94,27 @@ namespace MatrixTrace
         {
             Console.ResetColor();
             Console.WriteLine("Output from matrix in spiral order:");
-            for (int i = 0, j = 0; j < matrix.GetLength(1); j++)
+            for (int i = 0, j = 0; j < _matrix.GetLength(1); j++)
             {
-                Console.Write(matrix[i,j]);
+                Console.Write(_matrix[i, j]);
                 Console.Write(" ");
             }
 
-            for (int i = 1, j = matrix.GetLength(1) -1; i < matrix.GetLength(0); i++)
+            for (int i = 1, j = _matrix.GetLength(1) - 1; i < _matrix.GetLength(0); i++)
             {
-                Console.Write(matrix[i, j]);
-                Console.Write(" ");
-            }
-            
-            for (int i = matrix.GetLength(0)-1, j = matrix.GetLength(1) - 2; j > -1; j--)
-            {
-                Console.Write(matrix[i, j]);
+                Console.Write(_matrix[i, j]);
                 Console.Write(" ");
             }
 
-            for (int i = 1, j = 0; j < matrix.GetLength(1)-1; j++)
+            for (int i = _matrix.GetLength(0) - 1, j = _matrix.GetLength(1) - 2; j > -1; j--)
             {
-                Console.Write(matrix[i, j]);
+                Console.Write(_matrix[i, j]);
+                Console.Write(" ");
+            }
+
+            for (int i = 1, j = 0; j < _matrix.GetLength(1) - 1; j++)
+            {
+                Console.Write(_matrix[i, j]);
                 Console.Write(" ");
             }
             Console.Read();
