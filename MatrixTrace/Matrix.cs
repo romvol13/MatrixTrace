@@ -18,8 +18,7 @@ namespace MatrixTrace
         {
             if (CheckValues(rows, columns) == false)
             {
-                Console.WriteLine("Invalid input");
-                return;
+                throw new ArgumentException("Invalid input");
             }
 
             _rows = rows;
@@ -63,9 +62,10 @@ namespace MatrixTrace
             }
         }
 
-        public int[,] ReturnMatrix()   //method for unit test
+        public int[,] ReturnMatrixClone()   //method for unit test
         {
-            return _matrix;
+            int[,] clonedMatrix = (int[,])_matrix.Clone();
+            return clonedMatrix;
         }
 
         public bool CheckValues(int rows, int columns)

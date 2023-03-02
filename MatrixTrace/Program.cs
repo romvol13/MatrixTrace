@@ -8,33 +8,14 @@ namespace MatrixTrace
         {
             int rows;
             int columns;
-            string input;
 
             //Checking if a first input is an integer and greather than zero 
             Console.Write("Enter the quantity of rows for matrix: ");
-            input = Console.ReadLine();
-            if (CheckInput(input) == true)
-            {
-                rows = Convert.ToInt32(input);
-            }
-            else
-            {
-                Console.WriteLine("Invalid input");
-                return;
-            }
+            rows = CheckCondition(Console.ReadLine());
             
             //Checking if a second input is an integer and greather than zero
             Console.WriteLine("Enter the quantity of columns for matrix: ");
-            input= Console.ReadLine();
-            if (CheckInput(input) == true)
-            {
-                columns = Convert.ToInt32(input);
-            }
-            else
-            {
-                Console.WriteLine("Invalid input");
-                return;
-            }
+            columns = CheckCondition(Console.ReadLine());
 
             Matrix matrix = new Matrix(rows, columns);
             matrix.Print();
@@ -53,6 +34,20 @@ namespace MatrixTrace
                 return false;
             }
             return true;
+        }
+
+        private static int CheckCondition(string input)
+        {
+            int value = 0;
+            if (CheckInput(input) == true)
+            {
+                value = Convert.ToInt32(input);
+            }
+            else
+            {
+                throw new ArgumentException("Invalid input");
+            }
+            return value;
         }
     }
 }

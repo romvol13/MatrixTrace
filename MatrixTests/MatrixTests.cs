@@ -20,7 +20,7 @@ namespace MatrixTests
             Matrix test1 = new Matrix(rows, columns);
             
             // act
-            int[,] matrix = test1.ReturnMatrix();
+            int[,] matrix = test1.ReturnMatrixClone();
             int actualRows = matrix.GetLength(0);
             int actualColumns = matrix.GetLength(1);
 
@@ -40,7 +40,7 @@ namespace MatrixTests
             Matrix test2 = new Matrix(rows, columns);
 
             //act
-            int[,] matrix = test2.ReturnMatrix();
+            int[,] matrix = test2.ReturnMatrixClone();
             foreach (int value in matrix)
             {
                 if (value < 0 | value > 100)
@@ -52,6 +52,7 @@ namespace MatrixTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void InputValues1()  //Both input values are negative
         {
             // arrange
@@ -61,12 +62,10 @@ namespace MatrixTests
 
             //act
             bool actualResult = test3.CheckValues(rows, columns);
-
-            // assert
-            Assert.IsFalse(actualResult);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void InputValues2()  //One input value is greather than zero, another is negative
         {
             // arrange
@@ -76,12 +75,10 @@ namespace MatrixTests
 
             //act
             bool actualResult = test4.CheckValues(rows, columns);
-
-            // assert
-            Assert.IsFalse(actualResult);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void InputValues3()     //One of the input values is zero
         {
             // arrange
@@ -91,9 +88,6 @@ namespace MatrixTests
 
             //act
             bool actualResult = test5.CheckValues(rows, columns);
-
-            // assert
-            Assert.IsFalse(actualResult);
         }
 
         [TestMethod]
@@ -106,7 +100,7 @@ namespace MatrixTests
             Matrix test6 = new Matrix(rows, columns);
 
             //act
-            int[,] matrix = test6.ReturnMatrix();
+            int[,] matrix = test6.ReturnMatrixClone();
             for (int i = 0; i < Math.Min(rows, columns); i++)
             {
                 expectedResult += matrix[i, i];
